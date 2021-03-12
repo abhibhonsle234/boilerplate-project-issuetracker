@@ -12,6 +12,14 @@ const runner            = require('./test-runner');
 
 let app = express();
 
+const mongoose = require("mongoose")
+const uri = process.env.DB;
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false } );
+const connection = mongoose.connection;
+connection.once("open", function() {
+    console.log("MongoDB database connection established successfully");
+  });
+
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
